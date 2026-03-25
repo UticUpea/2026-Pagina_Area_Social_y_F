@@ -1,0 +1,219 @@
+(function ($) {
+    "use strict";
+    
+    // Back to top button
+    $(document).on('click', '.back-to-top', function () {
+        $("html,body").animate({
+            scrollTop: 0
+        }, 2000);
+    });
+    $(window).on("scroll",function () {
+        if ($(this).scrollTop() > 100) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
+    });
+    $('.back-to-top').click(function () {
+        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        return false;
+    });
+
+
+    // Facts counter
+    $('[data-toggle="counter-up"]').counterUp({
+        delay: 10,
+        time: 2000
+    });
+    $("a[href^='#']").on('click', function(e) {
+	e.preventDefault();
+	
+	var position = $($(this).attr("href")).offset().top;
+
+	$("body, html").animate({
+		scrollTop: position
+	} /* speed */ );
+});
+
+
+    
+    // Sticky Navbar
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 0) {
+            $('.navbar').addClass('nav-sticky');
+        } else {
+            $('.navbar').removeClass('nav-sticky');
+        }
+    });
+    
+    
+    // Dropdown on mouse hover
+    $(document).ready(function () {
+        function toggleNavbarMethod() {
+            if ($(window).width() > 992) {
+                $('.navbar .dropdown').on('mouseover', function () {
+                    $('.dropdown-toggle', this).trigger('click');
+                }).on('mouseout', function () {
+                    $('.dropdown-toggle', this).trigger('click').blur();
+                });
+            } else {
+                $('.navbar .dropdown').off('mouseover').off('mouseout');
+            }
+        }
+        toggleNavbarMethod();
+        $(window).resize(toggleNavbarMethod);
+    });
+
+    
+    // Main carousel
+    $(".carousel .owl-carousel").owlCarousel({
+        autoplay: true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        items: 1,
+        smartSpeed: 300,
+        dots: false,
+        loop: true,
+        nav : true,
+        navText : [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ]
+    });
+    
+    // Modal Video
+    $(document).ready(function () {
+        var $videoSrc;
+        $('.btn-play').click(function () {
+            $videoSrc = $(this).data("src");
+        });
+        console.log($videoSrc);
+
+        $('#videoModal').on('shown.bs.modal', function (e) {
+            $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
+        })
+
+        $('#videoModal').on('hide.bs.modal', function (e) {
+            $("#video").attr('src', $videoSrc);
+        })
+    });
+    
+    // jQuery counterUp
+    $('[data-toggle="counter-up"]').counterUp({
+        delay: 10,
+        time: 2000
+    });
+
+
+    // Testimonials carousel
+    $(".testimonials-carousel").owlCarousel({
+        autoplay: true,
+        animateIn: 'slideInDown',
+        animateOut: 'slideOutDown',
+        items: 1,
+        smartSpeed: 450,
+        dots: false,
+        loop: true,
+        nav : true,
+        navText : [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
+        responsive: {
+            0:{
+                items:1
+            },
+            576:{
+                items:1
+            },
+            768:{
+                items:2
+            },
+            992:{
+                items:3
+            }
+        }
+    });
+    
+    
+    // Blogs carousel
+    $(".blog-carousel").owlCarousel({
+        autoplay: true,
+        dots: false,
+        loop: true,
+        nav : true,
+        navText : [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
+        responsive: {
+            0:{
+                items:1
+            },
+            576:{
+                items:1
+            },
+            768:{
+                items:2
+            }
+        }
+    });
+    
+})(jQuery);
+
+
+/*====================================
+    Fullscreen burger menu
+ ======================================*/
+ $(".menu-trigger, .mobilenav").click(function () {
+    $(".mobilenav").fadeToggle(500);
+  });
+  $(".menu-trigger, .mobilenav").click(function () {
+    $(".top-menu").toggleClass("top-animate");
+    $(".mid-menu").toggleClass("mid-animate");
+    $(".bottom-menu").toggleClass("bottom-animate");
+  });
+
+
+  /* ========================================================================
+     On click menu item animate to the section
+   ========================================================================== */
+  $(".mobilenav li, .back-to-top").on('click', function() {
+    var target = $(this).data('rel');
+    var $target = $(target);
+    $('html, body').stop().animate({
+        'scrollTop': $target.offset().top
+    }, 900, 'swing');
+  });
+
+  
+  $('#fun-facts').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
+    if (visible) {
+        $(this).find('.timer').each(function () {
+            var $this = $(this);
+            $({ Counter: 0 }).animate({ Counter: $this.text() }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function () {
+                    $this.text(Math.ceil(this.Counter));
+                }
+            });
+        });
+        $(this).unbind('inview');
+    }
+});
+
+$(function() {
+    $('a.scroll').click(function() {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html,body').animate({
+            scrollTop: target.offset().top -50
+          }, 1000);
+          return false;
+        }
+      }
+    });
+  });

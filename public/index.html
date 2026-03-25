@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>upea.png" id="ico">
+  <title id="title-page">UPEA</title>
+  
+  <!-- Favicon -->
+  <link href="<%= BASE_URL %>img/favicon.ico" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+  
+  <!-- Libraries CSS -->
+  <link href="<%= BASE_URL %>asets/lib/animate/animate.min.css" rel="stylesheet">
+  <link href="<%= BASE_URL %>asets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link href="<%= BASE_URL %>asets/css/style.css" rel="stylesheet">
+  <link href="<%= BASE_URL %>asets/css/animate.css" rel="stylesheet">
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  
+  <div class="contened" id="contened" style="transition: none;">
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+  </div>
+  
+  <div id="app"></div>
+  
+  <!-- ✅ jQuery PRIMERO (sin duplicar) -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  
+  <!-- ✅ Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- ✅ Libraries JS (en orden) -->
+  <script src="<%= BASE_URL %>asets/lib/easing/easing.min.js"></script>
+  <script src="<%= BASE_URL %>asets/lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="<%= BASE_URL %>asets/lib/waypoints/waypoints.min.js"></script>
+  <script src="<%= BASE_URL %>asets/lib/counterup/counterup.min.js"></script>
+  
+  <!-- ✅ Contact JS -->
+  <script src="<%= BASE_URL %>asets/mail/jqBootstrapValidation.min.js"></script>
+  <script src="<%= BASE_URL %>asets/mail/contact.js"></script>
+  
+  <!-- ✅ Template JS -->
+  <script src="<%= BASE_URL %>asets/js/main.js"></script>
+  <script src="<%= BASE_URL %>asets/js/wow.js"></script>
+  <script src="<%= BASE_URL %>asets/js/loader.js"></script>
+</body>
+</html>

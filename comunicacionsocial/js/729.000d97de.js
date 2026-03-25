@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkupea_carreras"]=self["webpackChunkupea_carreras"]||[]).push([[729],{2729:function(r,n,e){e.r(n),e.d(n,{default:function(){return o}});var a=e(3396);function u(r,n,e,u,t,c){return(0,a.wg)(),(0,a.iD)("div")}var t=e(65),c={name:"contanctView",computed:{...(0,t.rn)(["url_api","Institucion"])}},i=e(89);const s=(0,i.Z)(c,[["render",u]]);var o=s}}]);
+//# sourceMappingURL=729.000d97de.js.map

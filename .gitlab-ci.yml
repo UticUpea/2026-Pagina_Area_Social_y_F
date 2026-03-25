@@ -1,0 +1,43 @@
+stages:
+  - pull
+  - build
+  - deploy
+
+refresh:
+  stage: pull
+  script:
+    - echo "Refreshing repository"
+    - echo "Pull from repository..."
+    - cd "$ROOT_DIRECTORY"/"$BASE_REPOSITORY"
+    - pwd
+    - git restore .
+    - git pull http://"$ROOT_USER":"$ROOT_PASSWORD"@gitlabsie.upea.bo/"$GROUP"/"$BASE_REPOSITORY".git master
+
+building:
+  stage: build
+  script:
+    - echo "Building start..."
+    - cd "$ROOT_DIRECTORY"/"$BASE_REPOSITORY"
+    - pwd
+    - echo "Instalar dependencias del proyecto"
+    - npm install
+    - echo "Deploy para Historia"
+    - printf 'VUE_APP_ROOT_API="https://serviciopagina.upea.bo/"\nVUE_APP_ID_INSTITUCION=40\nVUE_APP_ID_CARRERA=10\n' > .env
+    - cat .env
+    - npm run build
+    - if [ -d 'historia' ]; then rm -r historia ; fi
+    - mv dist historia
+    - echo "Deploy para Ciencias del Desarrollo"
+    - printf 'VUE_APP_ROOT_API="https://serviciopagina.upea.bo/"\nVUE_APP_ID_INSTITUCION=39\nVUE_APP_ID_CARRERA=5\n' > .env
+    - cat .env
+    - npm run build
+    - if [ -d 'desarrollo' ]; then rm -r desarrollo ; fi
+    - mv dist desarrollo
+
+    - rm .env
+
+deployment:
+  stage: deploy
+  script:
+    - echo "Deploy..."
+    - pwd

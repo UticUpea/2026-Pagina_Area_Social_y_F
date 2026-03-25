@@ -37,7 +37,7 @@
 
      
       <div v-else class="row justify-content-center animate-box wow animated">
-        <div class="text-center mb-5">
+        <div class="col-12 text-center mb-5">
           <h1 class="mt-2 mb-3">OFERTAS MÁS RECIENTES</h1>       
         </div>
         <div class="container"> 

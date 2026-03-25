@@ -20,7 +20,7 @@
     <!-- Carrusel de servicios recientes -->
     <div class="container-fluid-secundary p-0 mb-5 pb-5" style="position: relative;">
       
-     
+      <!-- LOADING CARRUSEL -->
       <div v-if="loading" class="text-center py-5">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
           <span class="sr-only">Cargando...</span>
@@ -28,19 +28,21 @@
         <p class="mt-3 text-muted">Cargando servicios...</p>
       </div>
 
-      
+      <!-- SIN SERVICIOS PARA CARRUSEL -->
       <div v-else-if="serviciosRecientes.length === 0" class="text-center py-5">
         <i class="fa fa-concierge-bell fa-4x text-muted mb-3" style="opacity: 0.5;"></i>
         <h3 class="mb-3">Sin servicios recientes</h3>
         <p class="text-muted">Pronto se agregarán nuevos servicios.</p>
       </div>
 
-     
-      <div v-else class="row justify-content-center animate-box wow animated">
-        <div class="text-center mb-5">
-          <h1 class="mt-2 mb-3">SERVICIOS MÁS RECIENTES</h1>       
-        </div>
-        <div class="container"> 
+      <!-- CARRUSEL CON DATOS -->
+      <div v-else>
+        <div class="container">
+          <div class="row justify-content-center animate-box wow animated">
+            <div class="col-12 text-center mb-5">
+              <h1 class="mt-2 mb-3">SERVICIOS MÁS RECIENTES</h1>       
+            </div>
+          </div>
           <Carousel :autoplay="5000" :items-to-show="1" :wrapAround="true" :transition="500" style="height: 400px;">
             <Slide class="" v-for="(serv, index) of serviciosRecientes" :key="index" style="height: 380px;">
               <router-link
@@ -89,7 +91,7 @@
             <div class="blog-area pd-top-120 pd-bottom-120">
               <div class="container paused">
                 
-               
+                <!-- LOADING STATE -->
                 <div v-if="loading" class="col-12 text-center py-5">
                   <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
                     <span class="sr-only">Cargando...</span>
@@ -97,7 +99,7 @@
                   <p class="mt-3 text-muted">Cargando servicios...</p>
                 </div>
 
-              
+                <!-- EMPTY STATE - SIN SERVICIOS -->
                 <div v-else-if="servicios && servicios.length === 0" class="col-12 text-center py-5">
                   <i class="fa fa-folder-open fa-4x text-muted mb-3" style="opacity: 0.5;"></i>
                   <h2 class="mb-3">Sin servicios disponibles</h2>
@@ -107,7 +109,7 @@
                   </router-link>
                 </div>
 
-              
+                <!-- SEARCH RESULTS -->
                 <div v-else-if="searchGet" class="">
                   <div v-if="serviciosBusqueda.length == 0" class="col-12 text-center py-5">
                     <i class="fa fa-search fa-4x text-muted mb-3" style="opacity: 0.5;"></i>
@@ -159,7 +161,7 @@
                   </div>
                 </div>
 
-                
+                <!-- LISTA COMPLETA DE SERVICIOS -->
                 <div v-else class="row justify-content-center">
                   <div class="col-lg-5 col-md-6 zoom" 
                        v-for="(serv, index) of servicios"

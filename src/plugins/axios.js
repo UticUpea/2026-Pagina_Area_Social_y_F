@@ -6,14 +6,13 @@ const UPLOADS_URL = process.env.VUE_APP_UPLOADS_URL?.trim()
 const INSTITUCION_ID = process.env.VUE_APP_ID_SERVICIO_ADMIN?.trim()
 
 if (!API_BASE) {
-  console.error('❌ ERROR CRÍTICO: VUE_APP_API_V2_ADMIN no está configurada en .env')
   throw new Error('Falta configuración requerida: VUE_APP_API_V2_ADMIN')
 }
 
 if (!UPLOADS_URL) {
-  console.error('❌ ERROR CRÍTICO: VUE_APP_UPLOADS_URL no está configurada en .env')
   throw new Error('Falta configuración requerida: VUE_APP_UPLOADS_URL')
 }
+
 const api = axios.create({
   baseURL: API_BASE,
   timeout: 15000,
@@ -46,6 +45,7 @@ api.interceptors.request.use(
   },
   error => Promise.reject(error)
 )
+
 api.interceptors.response.use(
   response => response,
   error => {
@@ -60,21 +60,24 @@ api.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
 api.uploadsUrl = UPLOADS_URL
 api.institucionId = INSTITUCION_ID
 
 api.getImageUrl = (filename) => {
-  if (!filename) return ''
+  if (!filename) {
+    return ''
+  }
   
-  if (filename.startsWith('http')) {
+  if (filename.startsWith('http://') || filename.startsWith('https://')) {
     return filename
   }
   
-  const base = UPLOADS_URL.endsWith('/') ? UPLOADS_URL.slice(0, -1) : UPLOADS_URL
-  const cleanFilename = filename.startsWith('/') ? filename.slice(1) : filename
+  const base = UPLOADS_URL.endsWith(' ') ? UPLOADS_URL.slice(0, -1) : UPLOADS_URL
   
-  if (!cleanFilename.includes('uploads/')) {
-    return `${base}/uploads/${cleanFilename}`
+  let cleanFilename = filename.trim()
+  if (cleanFilename.startsWith('/')) {
+    cleanFilename = cleanFilename.substring(1)
   }
   
   return `${base}/${cleanFilename}`

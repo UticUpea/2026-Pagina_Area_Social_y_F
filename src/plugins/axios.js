@@ -1,18 +1,14 @@
 import axios from 'axios'
 
 const API_BASE = process.env.VUE_APP_API_V2_ADMIN?.trim()
-const API_TOKEN = process.env.VUE_APP_TOKEN_ADMIN?.trim()
-const UPLOADS_URL = process.env.VUE_APP_UPLOADS_URL?.trim()
+const API_TOKEN = process.env.VUE_APP_TOKEN_ADMIN?.trim() 
 const INSTITUCION_ID = process.env.VUE_APP_ID_SERVICIO_ADMIN?.trim()
 
 if (!API_BASE) {
+  console.error('ERROR CRÍTICO: VUE_APP_API_V2_ADMIN no está configurada en .env')
   throw new Error('Falta configuración requerida: VUE_APP_API_V2_ADMIN')
 }
-
-if (!UPLOADS_URL) {
-  throw new Error('Falta configuración requerida: VUE_APP_UPLOADS_URL')
-}
-
+ 
 const api = axios.create({
   baseURL: API_BASE,
   timeout: 15000,
@@ -29,7 +25,6 @@ api.interceptors.request.use(
     try {
       token = sessionStorage.getItem('auth_token')
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.warn('Error al obtener token:', e)
     }
     
@@ -53,7 +48,6 @@ api.interceptors.response.use(
       try {
         sessionStorage.removeItem('auth_token')
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.warn('Error al limpiar token:', e)
       }
     }
@@ -61,7 +55,6 @@ api.interceptors.response.use(
   }
 )
 
-api.uploadsUrl = UPLOADS_URL
 api.institucionId = INSTITUCION_ID
 
 api.getImageUrl = (filename) => {
@@ -70,17 +63,12 @@ api.getImageUrl = (filename) => {
   }
   
   if (filename.startsWith('http://') || filename.startsWith('https://')) {
-    return filename
+    return filename.trim()
   }
   
-  const base = UPLOADS_URL.endsWith(' ') ? UPLOADS_URL.slice(0, -1) : UPLOADS_URL
+  const cleanFilename = filename.trim().replace(/^\/+/, '')
   
-  let cleanFilename = filename.trim()
-  if (cleanFilename.startsWith('/')) {
-    cleanFilename = cleanFilename.substring(1)
-  }
-  
-  return `${base}/${cleanFilename}`
+  return `${API_BASE.replace('/api/v2', '')}/${cleanFilename}`
 }
 
 export const setAuthToken = (token) => {
@@ -90,8 +78,7 @@ export const setAuthToken = (token) => {
     } else {
       sessionStorage.removeItem('auth_token')
     }
-  } catch (e) {
-    // eslint-disable-next-line no-console
+  } catch (e) { 
     console.warn('Error al gestionar token:', e)
   }
 }
@@ -99,8 +86,7 @@ export const setAuthToken = (token) => {
 export const getAuthToken = () => {
   try {
     return sessionStorage.getItem('auth_token')
-  } catch (e) {
-    // eslint-disable-next-line no-console
+  } catch (e) { 
     console.warn('Error al obtener token:', e)
     return null
   }
@@ -109,8 +95,7 @@ export const getAuthToken = () => {
 export const clearAuthToken = () => {
   try {
     sessionStorage.removeItem('auth_token')
-  } catch (e) {
-    // eslint-disable-next-line no-console
+  } catch (e) { 
     console.warn('Error al limpiar token:', e)
   }
 }

@@ -5,14 +5,9 @@ if (!process.env.VUE_APP_API_V2_ADMIN?.trim()) {
   console.error('❌ ERROR: VUE_APP_API_V2_ADMIN no configurada')
 }
 
-if (!process.env.VUE_APP_UPLOADS_URL?.trim()) {
-  console.error('❌ ERROR: VUE_APP_UPLOADS_URL no configurada')
-}
-
 export default createStore({
   state: {
     url_api: process.env.VUE_APP_API_V2_ADMIN?.trim(),
-    uploads_url: process.env.VUE_APP_UPLOADS_URL?.trim(),
     institucion_id: process.env.VUE_APP_ID_SERVICIO_ADMIN?.trim(),
     
     getter: true,
@@ -28,9 +23,11 @@ export default createStore({
   },
 
   getters: {
+
     institucionLogo: (state) => {
       const logo = state.Institucion?.Descripcion?.institucion_logo
-      return logo && state.uploads_url ? `${state.uploads_url}/${logo}` : ''
+      if (!logo) return ''
+      return api.getImageUrl(logo)
     },
     
     institucionColors: (state) => {
@@ -110,7 +107,7 @@ export default createStore({
         const id = state.institucion_id
         
         if (!id) {
-          console.error('❌ ERROR: institucion_id no configurada')
+          console.error('ERROR: institucion_id no configurada')
           return { success: false, error: new Error('Falta institucion_id') }
         }
         
